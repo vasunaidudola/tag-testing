@@ -1,0 +1,28 @@
+name: Deploy Manual
+
+# Shows region BEFORE opening the workflow
+run-name: Deploy -> ${{ inputs.region }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: Select deployment region
+        required: true
+        type: choice
+        options:
+          - us-east-1
+          - ap-south-1
+          - eu-west-1
+
+jobs:
+  deploy:
+    # THIS LINE IS THE KEY (job display name)
+    name: Deploy to ${{ inputs.region }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show deployment details
+        run: |
+          echo "Deploying version: ${{ github.ref_name }}"
+          echo "Target region: ${{ inputs.region }}"
